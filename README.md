@@ -6,9 +6,9 @@
 
 <p align="center">
   <a href="https://github.com/xdev-asia-labs/openvpn-install/actions/workflows/test.yml"><img src="https://github.com/xdev-asia-labs/openvpn-install/actions/workflows/test.yml/badge.svg" alt="Installation Test"></a>
-  <a href="https://github.com/xdev-asia-labs/openvpn-install/actions/workflows/multi-distro-test.yml"><img src="https://github.com/xdev-asia-labs/openvpn-install/actions/workflows/multi-distro-test.yml/badge.svg" alt="Multi-Distro Test"></a>
   <a href="https://github.com/xdev-asia-labs/openvpn-install/actions/workflows/security.yml"><img src="https://github.com/xdev-asia-labs/openvpn-install/actions/workflows/security.yml/badge.svg" alt="Security Scanning"></a>
   <a href="https://github.com/xdev-asia-labs/openvpn-install/actions/workflows/shellcheck.yml"><img src="https://github.com/xdev-asia-labs/openvpn-install/actions/workflows/shellcheck.yml/badge.svg" alt="ShellCheck"></a>
+  <a href="https://github.com/xdev-asia-labs/openvpn-install/releases"><img src="https://img.shields.io/github/v/release/xdev-asia-labs/openvpn-install" alt="Latest Release"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
 </p>
 

@@ -2,7 +2,7 @@ name: Release on Test Success
 
 on:
   workflow_run:
-    workflows: ["OpenVPN Installation Test", "Multi-Distro Installation Test"]
+    workflows: ["Installation Test"]
     types:
       - completed
     branches:
