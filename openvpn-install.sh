@@ -14,7 +14,6 @@ EASY_RSA_URL="https://github.com/OpenVPN/easy-rsa/releases/download/v${EASY_RSA_
 # Exit Codes
 E_SUCCESS=0
 E_GENERAL=1
-E_INVALID_INPUT=2
 E_DEPENDENCY=3
 E_ROOT_REQUIRED=4
 E_OS_UNSUPPORTED=5
@@ -32,7 +31,8 @@ log() {
 	local level="$1"
 	shift
 	local message="$*"
-	local timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+	local timestamp
+	timestamp=$(date "+%Y-%m-%d %H:%M:%S")
 	# Ensure log file exists and is writable
 	if [[ ! -f "$LOG_FILE" ]]; then
 		touch "$LOG_FILE" 2>/dev/null || return
@@ -344,7 +344,7 @@ LimitNPROC=infinity" > /etc/systemd/system/openvpn-server@server.service.d/disab
 	mkdir -p /etc/openvpn/server/easy-rsa/
 	{ wget -qO- "$EASY_RSA_URL" 2>/dev/null || curl -sL "$EASY_RSA_URL" ; } | tar xz -C /etc/openvpn/server/easy-rsa/ --strip-components 1 || fatal_error "Failed to download Easy-RSA" $E_DEPENDENCY
 	chown -R root:root /etc/openvpn/server/easy-rsa/
-	cd /etc/openvpn/server/easy-rsa/
+	cd /etc/openvpn/server/easy-rsa/ || fatal_error "Failed to change directory to Easy-RSA" $E_GENERAL
 
 	# PKI Init
 	./easyrsa --batch init-pki
@@ -550,7 +550,7 @@ add_client() {
 		read -p "Name: " unsanitized_client
 		client=$(sed 's/[^0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-]/_/g' <<< "$unsanitized_client")
 	done
-	cd /etc/openvpn/server/easy-rsa/
+	cd /etc/openvpn/server/easy-rsa/ || fatal_error "Failed to change directory to Easy-RSA" $E_GENERAL
 	./easyrsa --batch --days=3650 build-client-full "$client" nopass
 	grep -vh '^#' /etc/openvpn/server/client-common.txt /etc/openvpn/server/easy-rsa/pki/inline/private/"$client".inline > "$script_dir"/"$client".ovpn
 	echo
@@ -580,7 +580,7 @@ revoke_client() {
 		read -p "Confirm $client revocation? [y/N]: " revoke
 	done
 	if [[ "$revoke" =~ ^[yY]$ ]]; then
-		cd /etc/openvpn/server/easy-rsa/
+		cd /etc/openvpn/server/easy-rsa/ || fatal_error "Failed to change directory to Easy-RSA" $E_GENERAL
 		./easyrsa --batch revoke "$client"
 		./easyrsa --batch --days=3650 gen-crl
 		rm -f /etc/openvpn/server/crl.pem
