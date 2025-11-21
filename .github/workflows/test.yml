@@ -38,7 +38,7 @@ jobs:
         run: |
           echo "Setting up test environment..."
           sudo apt-get update -qq
-          
+
           # Create TUN device
           sudo mkdir -p /dev/net
           sudo mknod /dev/net/tun c 10 200 2>/dev/null || true
@@ -205,7 +205,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
+          name: test-results-${{ matrix.os }}
           path: |
             /var/log/openvpn-install.log
             /etc/openvpn/server/server.conf
