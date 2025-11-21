@@ -517,10 +517,6 @@ This will:
 - Uninstall OpenVPN package
 - Remove IP forwarding configuration
 
-## Credits
-
-- Forked and maintained by xdev-asia-labs
-
 ## License
 
 MIT License - See the script header for full license text
